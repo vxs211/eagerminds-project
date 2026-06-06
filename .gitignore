@@ -1,0 +1,9 @@
+.env.local
+.env*.local
+.next/
+dist/
+build/
+node_modules/
+.DS_Store
+*.pem
+.git
