@@ -27,26 +27,38 @@ export async function POST(request: Request) {
       if (result.error) {
         // If it's a rate limit from Resend, we'll log it but return a "soft success"
         // to the client so the signup flow isn't blocked by a non-critical email.
-        if (result.error.name === "rate_limit_exceeded" || result.error.message.toLowerCase().includes("rate limit")) {
-          console.warn("Resend rate limit hit, but continuing signup:", result.error.message);
-          return NextResponse.json({ success: true, warning: "Email delayed due to rate limits" });
+        if (
+          result.error.name === "rate_limit_exceeded" ||
+          result.error.message.toLowerCase().includes("rate limit")
+        ) {
+          console.warn(
+            "Resend rate limit hit, but continuing signup:",
+            result.error.message,
+          );
+          return NextResponse.json({
+            success: true,
+            warning: "Email delayed due to rate limits",
+          });
         }
-        
+
         return NextResponse.json(
           { error: result.error.message },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
       return NextResponse.json({ success: true, id: result.data?.id });
     } catch (resendError: any) {
       console.error("Resend service error:", resendError);
-      return NextResponse.json({ success: true, warning: "Email service temporarily unavailable" });
+      return NextResponse.json({
+        success: true,
+        warning: "Email service temporarily unavailable",
+      });
     }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to send email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -47,7 +47,7 @@ export default function SignUpClient() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, handle }),
           });
-          
+
           if (!emailResponse.ok) {
             const errorData = await emailResponse.json();
             console.error("Welcome email API error:", errorData);
@@ -71,56 +71,58 @@ export default function SignUpClient() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Create Account
-        </h1>
+    <main className="min-h-screen bg-white flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-[400px]">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold text-[#171717] tracking-tight mb-2">Create Account</h1>
+          <p className="text-[#888888] text-sm">Join the minimal link-sharing community.</p>
+        </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-[#f7d4d6] border border-[#ee0000] text-[#c50000] px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSignUp} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Email
+        <form onSubmit={handleSignUp} className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider">
+              Email Address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-white border border-[#ebebeb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#171717] transition-all text-sm placeholder:text-[#a1a1a1]"
+              placeholder="name@example.com"
               required
               disabled={loading}
             />
           </div>
 
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+          <div className="space-y-2">
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-white border border-[#ebebeb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#171717] transition-all text-sm placeholder:text-[#a1a1a1]"
               required
               disabled={loading}
             />
           </div>
 
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+          <div className="space-y-2">
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider">
               Handle (@username)
             </label>
             <input
               type="text"
               value={handle}
               onChange={(e) => setHandle(e.target.value.toLowerCase())}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-white border border-[#ebebeb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#171717] transition-all text-sm placeholder:text-[#a1a1a1]"
               placeholder="myusername"
               required
               disabled={loading}
@@ -130,15 +132,15 @@ export default function SignUpClient() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
+            className="w-full bg-[#171717] hover:bg-black text-white font-medium py-2.5 rounded-md transition-all duration-200 disabled:opacity-50 text-sm shadow-sm"
           >
-            {loading ? "Creating account..." : "Sign Up"}
+            {loading ? "Creating account..." : "Continue"}
           </button>
         </form>
 
-        <p className="text-center text-gray-600 mt-6">
+        <p className="text-center text-[#888888] text-sm mt-8">
           Already have an account?{" "}
-          <Link href="/auth/login" className="text-blue-600 hover:underline">
+          <Link href="/auth/login" className="text-[#0070f3] hover:underline font-medium">
             Log in
           </Link>
         </p>

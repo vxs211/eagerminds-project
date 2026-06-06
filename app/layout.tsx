@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Bookmarks - Your Personal Link Directory",
-  description: "Save, manage, and share your favorite bookmarks with the world. Think Linktree meets Pocket.",
+  description:
+    "Save, manage, and share your favorite bookmarks with the world. Think Linktree meets Pocket.",
   openGraph: {
     title: "Bookmarks - Your Personal Link Directory",
     description: "Save and share your favorite links easily.",

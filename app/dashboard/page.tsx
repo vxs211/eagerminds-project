@@ -1,7 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import BookmarksList from "@/components/BookmarksList";
-import { LogOut } from "lucide-react";
+import ProfileSettings from "@/components/ProfileSettings";
+import { LogOut, User, Settings } from "lucide-react";
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -34,56 +35,82 @@ export default async function Dashboard() {
   const publicProfileUrl = `/u/${userHandle}`;
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">
-              {profile?.handle ? `@${profile.handle}` : "No handle set"} • {user.email}
+    <main className="min-h-screen bg-[#fafafa]">
+      <header className="bg-white border-b border-[#ebebeb]">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold text-[#171717] tracking-tight">Bookmarks</h1>
+            <div className="h-4 w-[1px] bg-[#ebebeb]" />
+            <p className="text-[#888888] text-sm font-medium">
+              {profile?.handle ? `@${profile.handle}` : "Setup Profile"}
             </p>
           </div>
-          <form action="/auth/logout" method="POST">
-            <button
-              type="submit"
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition"
-            >
-              <LogOut size={18} />
-              Log Out
-            </button>
-          </form>
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-mono text-[#a1a1a1] hidden sm:inline-block tracking-tighter uppercase">{user.email}</span>
+            <form action="/auth/logout" method="POST">
+              <button
+                type="submit"
+                className="bg-white hover:bg-[#fafafa] text-[#171717] border border-[#ebebeb] text-sm font-medium py-1.5 px-3 rounded-md transition-all duration-200 shadow-sm flex items-center gap-2"
+              >
+                <LogOut size={14} />
+                Sign Out
+              </button>
+            </form>
+          </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900">My Bookmarks</h2>
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        <div className="flex justify-between items-end mb-10 pb-6 border-b border-[#f5f5f5]">
+          <div>
+            <h2 className="text-3xl font-bold text-[#171717] tracking-tight">Your Links</h2>
+            <p className="text-[#888888] text-sm mt-1">Manage and organize your curated collection.</p>
+          </div>
           <Link
             href="/dashboard/new-bookmark"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+            className="bg-[#171717] hover:bg-black text-white text-sm font-medium py-2 px-6 rounded-full transition-all duration-200 shadow-sm"
           >
-            + Add Bookmark
+            Create New
           </Link>
         </div>
 
-        <BookmarksList userId={user.id} />
+        <div className="grid grid-cols-1 gap-6">
+          <BookmarksList userId={user.id} />
+        </div>
 
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-gray-700">
-            <strong>Your public profile:</strong>{" "}
-            {profile?.handle ? (
-              <a
-                href={publicProfileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                {process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/u/{profile.handle}
-              </a>
-            ) : (
-              <span className="text-red-500 italic">Please set up your profile handle in the database to see your public page.</span>
-            )}
-          </p>
+        <div className="mt-16 space-y-8">
+          <div className="p-6 bg-white rounded-xl border border-[#ebebeb] shadow-sm">
+            <h3 className="text-sm font-bold text-[#171717] uppercase tracking-widest mb-4">Sharing</h3>
+            <div className="flex items-center justify-between p-4 bg-[#fafafa] rounded-lg border border-[#f5f5f5]">
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-[#171717]">Public Profile URL</p>
+                {profile?.handle ? (
+                  <a
+                    href={publicProfileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-[#0070f3] hover:underline"
+                  >
+                    {process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/u/{profile.handle}
+                  </a>
+                ) : (
+                  <p className="text-xs text-amber-600 font-medium italic">Pending handle configuration...</p>
+                )}
+              </div>
+              {profile?.handle && (
+                <div className="bg-[#d3e5ff] text-[#0070f3] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Active</div>
+              )}
+            </div>
+          </div>
+
+          <div className="p-6 bg-white rounded-xl border border-[#ebebeb] shadow-sm">
+            <h3 className="text-sm font-bold text-[#171717] uppercase tracking-widest mb-4">Account Settings</h3>
+            <ProfileSettings
+              userId={user.id}
+              userEmail={user.email!}
+              initialHandle={profile?.handle}
+            />
+          </div>
         </div>
       </div>
     </main>
