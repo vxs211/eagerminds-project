@@ -12,6 +12,69 @@
   --color-inverse-canvas: var(--bg-inverse-canvas);
   --color-inverse-ink: var(--text-inverse-ink);
   --color-semantic-success: #016239;
+
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-display: "GT Walsheim", "Inter Variable", system-ui, sans-serif;
+
+  --text-display-xxl: 110px;
+  --text-display-xxl--line-height: 0.85;
+  --text-display-xxl--letter-spacing: -5.5px;
+  --text-display-xxl--font-weight: 500;
+
+  --text-display-xl: 85px;
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -4.25px;
+  --text-display-xl--font-weight: 500;
+
+  --text-display-lg: 62px;
+  --text-display-lg--line-height: 1.00;
+  --text-display-lg--letter-spacing: -3.1px;
+  --text-display-lg--font-weight: 500;
+
+  --text-display-md: 32px;
+  --text-display-md--line-height: 1.13;
+  --text-display-md--letter-spacing: -1.0px;
+  --text-display-md--font-weight: 500;
+
+  --text-headline: 22px;
+  --text-headline--line-height: 1.20;
+  --text-headline--letter-spacing: -0.8px;
+  --text-headline--font-weight: 700;
+
+  --text-subhead: 24px;
+  --text-subhead--line-height: 1.30;
+  --text-subhead--letter-spacing: -0.01px;
+  --text-subhead--font-weight: 400;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.30;
+  --text-body-lg--letter-spacing: -0.18px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body: 15px;
+  --text-body--line-height: 1.30;
+  --text-body--letter-spacing: -0.15px;
+  --text-body--font-weight: 400;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.40;
+  --text-body-sm--letter-spacing: -0.14px;
+  --text-body-sm--font-weight: 500;
+
+  --text-caption: 13px;
+  --text-caption--line-height: 1.20;
+  --text-caption--letter-spacing: -0.13px;
+  --text-caption--font-weight: 500;
+
+  --text-micro: 12px;
+  --text-micro--line-height: 1.20;
+  --text-micro--letter-spacing: -0.12px;
+  --text-micro--font-weight: 400;
+
+  --text-button: 14px;
+  --text-button--line-height: 1.0;
+  --text-button--letter-spacing: -0.14px;
+  --text-button--font-weight: 500;
 }
 
 @layer base {
@@ -41,12 +104,18 @@
     }
   }
 
+  @font-face {
+    font-family: "Inter Variable";
+    src: url("/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
   body {
     background-color: var(--color-canvas);
     color: var(--color-ink);
-    font-family:
-      ui-sans-serif, system-ui, sans-serif, "Inter", "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: var(--font-sans);
   }
 
   ::selection {

@@ -49,7 +49,7 @@ function LoginContent() {
     <main className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-[400px]">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-ink tracking-tight mb-2">Welcome Back</h1>
+          <h1 className="text-display-md text-ink mb-2">Welcome Back</h1>
           <p className="text-ink-muted text-sm">Please enter your details to sign in.</p>
         </div>
 

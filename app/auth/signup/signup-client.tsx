@@ -74,7 +74,7 @@ export default function SignUpClient() {
     <main className="min-h-screen bg-surface-1 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-[400px]">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-ink tracking-tight mb-2">Create Account</h1>
+          <h1 className="text-display-md text-ink mb-2">Create Account</h1>
           <p className="text-ink-muted text-sm">Join the minimal link-sharing community.</p>
         </div>
 

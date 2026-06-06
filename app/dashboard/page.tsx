@@ -39,7 +39,7 @@ export default async function Dashboard() {
       <header className="bg-surface-1 border-b border-hairline">
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-ink tracking-tight">Bookmarks</h1>
+            <h1 className="text-headline text-ink">Bookmarks</h1>
             <div className="h-4 w-[1px] bg-hairline" />
             <p className="text-ink-muted text-sm font-medium">
               {profile?.handle ? `@${profile.handle}` : "Setup Profile"}
@@ -63,7 +63,7 @@ export default async function Dashboard() {
       <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="flex justify-between items-end mb-10 pb-6 border-b border-hairline">
           <div>
-            <h2 className="text-3xl font-bold text-ink tracking-tight">Your Links</h2>
+            <h2 className="text-display-md text-ink">Your Links</h2>
             <p className="text-ink-muted text-sm mt-1">Manage and organize your curated collection.</p>
           </div>
           <Link
@@ -80,7 +80,7 @@ export default async function Dashboard() {
 
         <div className="mt-16 space-y-8">
           <div className="p-6 bg-surface-1 rounded-xl border border-hairline shadow-sm">
-            <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Sharing</h3>
+            <h3 className="text-caption text-ink uppercase mb-4">Sharing</h3>
             <div className="flex items-center justify-between p-4 bg-canvas rounded-lg border border-hairline">
               <div className="space-y-1">
                 <p className="text-sm font-medium text-ink">Public Profile URL</p>
@@ -104,7 +104,7 @@ export default async function Dashboard() {
           </div>
 
           <div className="p-6 bg-surface-1 rounded-xl border border-hairline shadow-sm">
-            <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">Account Settings</h3>
+            <h3 className="text-caption text-ink uppercase mb-4">Account Settings</h3>
             <ProfileSettings
               userId={user.id}
               userEmail={user.email!}

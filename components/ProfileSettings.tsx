@@ -29,23 +29,26 @@ export default function ProfileSettings({
     try {
       const { error: upsertError } = await supabase
         .from("profiles")
-        .upsert({
-          id: userId,
-          handle: handle.toLowerCase().trim(),
-          email: userEmail,
-        });
+        .upsert(
+          {
+            id: userId,
+            handle: handle.toLowerCase().trim(),
+            email: userEmail,
+          },
+          { onConflict: 'id' } // Fixes Postgres ambiguous unique constraint resolution issue
+        );
 
       if (upsertError) {
-        if (upsertError.message.includes("unique constraint")) {
+        if (upsertError.message?.includes("unique constraint") || upsertError.code === '23505') {
           throw new Error("This handle is already taken. Please try another one.");
         }
-        throw upsertError;
+        throw new Error(upsertError.message || JSON.stringify(upsertError));
       }
 
       setSuccess(true);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update profile");
+      setError((err as any).message || "Failed to update profile");
     } finally {
       setLoading(false);
     }
@@ -53,18 +56,18 @@ export default function ProfileSettings({
 
   return (
     <div className="mt-2">
-      <h3 className="text-sm font-bold text-ink uppercase tracking-widest mb-4">
+      <h3 className="text-caption text-ink uppercase mb-4">
         {initialHandle ? "Change Handle" : "Claim Your Handle"}
       </h3>
       
       {error && (
-        <div className="bg-surface-2 text-ink p-3 rounded-md mb-4 text-xs border border-ink">
+        <div className="bg-canvas text-ink p-3 rounded-md mb-4 text-micro border-l-4 border-l-accent-green shadow-sm">
           {error}
         </div>
       )}
       
       {success && (
-        <div className="bg-surface-2 text-ink p-3 rounded-md mb-4 text-xs border border-accent-green">
+        <div className="bg-canvas text-ink p-3 rounded-md mb-4 text-micro border-l-4 border-l-accent-green shadow-sm">
           Handle updated successfully.
         </div>
       )}
