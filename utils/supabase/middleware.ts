@@ -33,8 +33,12 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect to dashboard if logged in and trying to access auth pages
-  if (request.nextUrl.pathname.startsWith("/auth") && user) {
+  // Redirect to dashboard if logged in and trying to access auth pages (except logout)
+  if (
+    request.nextUrl.pathname.startsWith("/auth") &&
+    request.nextUrl.pathname !== "/auth/logout" &&
+    user
+  ) {
     const dashboardUrl = new URL("/dashboard", request.url);
     return NextResponse.redirect(dashboardUrl);
   }

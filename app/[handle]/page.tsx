@@ -32,13 +32,13 @@ export default async function PublicProfile({ params }: Props) {
     .order("created_at", { ascending: false });
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <main className="min-h-screen bg-gradient-to-br from-surface-1 to-canvas">
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-2">
+          <h1 className="text-5xl font-bold text-ink mb-2">
             @{profile.handle}
           </h1>
-          <p className="text-xl text-gray-600">Check out my bookmarks</p>
+          <p className="text-xl text-ink-muted">Check out my bookmarks</p>
         </div>
 
         {bookmarks && bookmarks.length > 0 ? (
@@ -49,30 +49,30 @@ export default async function PublicProfile({ params }: Props) {
                 href={bookmark.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-l-4 border-blue-500"
+                className="block bg-surface-1 rounded-lg shadow-md hover:shadow-xl transition p-6 border-l-4 border-accent-green"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h2 className="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                    <h2 className="text-lg font-semibold text-ink hover:text-accent-green">
                       {bookmark.title}
                     </h2>
-                    <p className="text-sm text-gray-500 mt-2 break-all">
+                    <p className="text-sm text-ink-muted mt-2 break-all">
                       {bookmark.url}
                     </p>
                   </div>
-                  <Globe className="text-blue-500 mt-1" size={20} />
+                  <Globe className="text-accent-green mt-1" size={20} />
                 </div>
               </a>
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-            <p className="text-gray-500 mb-4">No public bookmarks yet</p>
+          <div className="text-center py-12 bg-surface-1 rounded-lg border border-hairline">
+            <p className="text-ink-muted mb-4">No public bookmarks yet</p>
           </div>
         )}
 
         <div className="mt-12 text-center">
-          <Link href="/" className="text-blue-600 hover:underline">
+          <Link href="/" className="text-accent-green hover:underline">
             ← Back home
           </Link>
         </div>

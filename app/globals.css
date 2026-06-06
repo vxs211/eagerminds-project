@@ -1,2 +1,56 @@
 @import "tailwindcss";
 
+@theme {
+  --color-accent-green: #016239;
+  --color-canvas: var(--bg-canvas);
+  --color-surface-1: var(--bg-surface-1);
+  --color-surface-2: var(--bg-surface-2);
+  --color-hairline: var(--border-hairline);
+  --color-hairline-soft: var(--border-hairline-soft);
+  --color-ink: var(--text-ink);
+  --color-ink-muted: var(--text-ink-muted);
+  --color-inverse-canvas: var(--bg-inverse-canvas);
+  --color-inverse-ink: var(--text-inverse-ink);
+  --color-semantic-success: #016239;
+}
+
+@layer base {
+  :root {
+    --bg-canvas: #ffffff;
+    --bg-surface-1: #fafafa;
+    --bg-surface-2: #f5f5f5;
+    --border-hairline: #ebebeb;
+    --border-hairline-soft: #f0f0f0;
+    --text-ink: #171717;
+    --text-ink-muted: #888888;
+    --bg-inverse-canvas: #171717;
+    --text-inverse-ink: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-canvas: #090909;
+      --bg-surface-1: #141414;
+      --bg-surface-2: #1c1c1c;
+      --border-hairline: #262626;
+      --border-hairline-soft: #1a1a1a;
+      --text-ink: #ffffff;
+      --text-ink-muted: #999999;
+      --bg-inverse-canvas: #ffffff;
+      --text-inverse-ink: #000000;
+    }
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family:
+      ui-sans-serif, system-ui, sans-serif, "Inter", "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  ::selection {
+    background-color: var(--color-accent-green);
+    color: #000000;
+  }
+}

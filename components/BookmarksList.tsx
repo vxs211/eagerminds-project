@@ -44,9 +44,9 @@ export default function BookmarksList({ userId }: { userId: string }) {
 
   if (bookmarks.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-        <p className="text-gray-500 mb-4">No bookmarks yet</p>
-        <p className="text-gray-400">Start by adding your first bookmark!</p>
+      <div className="text-center py-12 bg-surface-1 rounded-lg border border-hairline">
+        <p className="text-ink-muted mb-4">No bookmarks yet</p>
+        <p className="text-ink-muted opacity-70">Start by adding your first bookmark!</p>
       </div>
     );
   }
