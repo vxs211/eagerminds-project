@@ -3,11 +3,12 @@ export const dynamic = "force-dynamic";
 import EditBookmarkClient from "../edit-bookmark-client";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function EditBookmark({ params }: Props) {
-  return <EditBookmarkClient bookmarkId={params.id} />;
+export default async function EditBookmark({ params }: Props) {
+  const { id } = await params;
+  return <EditBookmarkClient bookmarkId={id} />;
 }

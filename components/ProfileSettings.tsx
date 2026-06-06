@@ -27,22 +27,35 @@ export default function ProfileSettings({
     setSuccess(false);
 
     try {
-      const { error: upsertError } = await supabase
-        .from("profiles")
-        .upsert(
-          {
+      let submitError = null;
+
+      if (initialHandle) {
+        // Profile exists, perform explicit UPDATE to bypass 'upsert' testing INSERT policies
+        const { error } = await supabase
+          .from("profiles")
+          .update({
+            handle: handle.toLowerCase().trim(),
+            email: userEmail,
+          })
+          .eq("id", userId);
+        submitError = error;
+      } else {
+        // Profile does not exist, perform explicit INSERT
+        const { error } = await supabase
+          .from("profiles")
+          .insert({
             id: userId,
             handle: handle.toLowerCase().trim(),
             email: userEmail,
-          },
-          { onConflict: 'id' } // Fixes Postgres ambiguous unique constraint resolution issue
-        );
+          });
+        submitError = error;
+      }
 
-      if (upsertError) {
-        if (upsertError.message?.includes("unique constraint") || upsertError.code === '23505') {
+      if (submitError) {
+        if (submitError.message?.includes("unique constraint") || submitError.code === '23505') {
           throw new Error("This handle is already taken. Please try another one.");
         }
-        throw new Error(upsertError.message || JSON.stringify(upsertError));
+        throw new Error(submitError.message || JSON.stringify(submitError));
       }
 
       setSuccess(true);

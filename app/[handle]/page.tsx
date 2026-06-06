@@ -4,19 +4,20 @@ import { Globe } from "lucide-react";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: {
+  params: Promise<{
     handle: string;
-  };
+  }>;
 };
 
 export default async function PublicProfile({ params }: Props) {
   const supabase = await createClient();
+  const { handle } = await params;
 
   // Get profile by handle
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("id, handle, email")
-    .eq("handle", params.handle)
+    .eq("handle", handle)
     .single();
 
   if (profileError || !profile) {
