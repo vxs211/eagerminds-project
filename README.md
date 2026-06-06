@@ -79,33 +79,33 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
-CREATE POLICY "Users can read own profile" 
-  ON profiles FOR SELECT 
+CREATE POLICY "Users can read own profile"
+  ON profiles FOR SELECT
   USING (auth.uid() = id);
 
-CREATE POLICY "Users can update own profile" 
-  ON profiles FOR UPDATE 
+CREATE POLICY "Users can update own profile"
+  ON profiles FOR UPDATE
   USING (auth.uid() = id);
 
 -- Bookmarks policies
-CREATE POLICY "Users can read own bookmarks" 
-  ON bookmarks FOR SELECT 
+CREATE POLICY "Users can read own bookmarks"
+  ON bookmarks FOR SELECT
   USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert own bookmarks" 
-  ON bookmarks FOR INSERT 
+CREATE POLICY "Users can insert own bookmarks"
+  ON bookmarks FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "Users can update own bookmarks" 
-  ON bookmarks FOR UPDATE 
+CREATE POLICY "Users can update own bookmarks"
+  ON bookmarks FOR UPDATE
   USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can delete own bookmarks" 
-  ON bookmarks FOR DELETE 
+CREATE POLICY "Users can delete own bookmarks"
+  ON bookmarks FOR DELETE
   USING (auth.uid() = user_id);
 
-CREATE POLICY "Anyone can read public bookmarks" 
-  ON bookmarks FOR SELECT 
+CREATE POLICY "Anyone can read public bookmarks"
+  ON bookmarks FOR SELECT
   USING (is_public = true);
 ```
 
@@ -124,6 +124,7 @@ Visit `http://localhost:3000` to see the app.
 **Issue**: The Next.js build was failing because client-side pages with Supabase imports were being prerendered at build time, but environment variables weren't available during the build process.
 
 **Solution**: Separated server pages from client components by:
+
 1. Creating server pages with `export const dynamic = "force-dynamic"` to prevent prerendering
 2. Splitting client logic into separate `*-client.tsx` components that are only rendered in the browser
 3. This ensures Supabase client initialization only happens at runtime when environment variables are available

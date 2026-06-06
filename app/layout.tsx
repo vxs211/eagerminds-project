@@ -2,8 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bookmarks - Share your links",
-  description: "A personal bookmarks app where you can share your favorite links",
+  title: "Bookmarks - Your Personal Link Directory",
+  description: "Save, manage, and share your favorite bookmarks with the world. Think Linktree meets Pocket.",
+  openGraph: {
+    title: "Bookmarks - Your Personal Link Directory",
+    description: "Save and share your favorite links easily.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bookmarks",
+    description: "Save and share your favorite links easily.",
+  },
 };
 
 export default function RootLayout({

@@ -30,34 +30,40 @@ export default function SignUpClient() {
 
       if (data.user) {
         // Create profile with handle
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert([
-            {
-              id: data.user.id,
-              handle: handle,
-              email: email,
-            },
-          ]);
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: data.user.id,
+            handle: handle,
+            email: email,
+          },
+        ]);
 
         if (profileError) throw profileError;
 
         // Send welcome email
         try {
-          await fetch("/api/send-welcome-email", {
+          const emailResponse = await fetch("/api/send-welcome-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, handle }),
           });
+          
+          if (!emailResponse.ok) {
+            const errorData = await emailResponse.json();
+            console.error("Welcome email API error:", errorData);
+            // We don't throw here because the user is already signed up in Supabase
+          }
         } catch (emailError) {
           console.error("Failed to send welcome email:", emailError);
         }
 
-        router.push("/auth/login?message=Check your email to confirm your account");
+        router.push(
+          "/auth/login?message=Check your email to confirm your account",
+        );
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "An error occurred during sign up"
+        err instanceof Error ? err.message : "An error occurred during sign up",
       );
     } finally {
       setLoading(false);
@@ -67,7 +73,9 @@ export default function SignUpClient() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Create Account</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          Create Account
+        </h1>
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">

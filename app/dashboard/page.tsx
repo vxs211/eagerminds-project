@@ -6,17 +6,16 @@ import { LogOut } from "lucide-react";
 export default async function Dashboard() {
   const supabase = await createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
         <div className="text-center">
           <p className="text-lg text-gray-700 mb-4">You are not logged in</p>
-          <Link
-            href="/auth/login"
-            className="text-blue-600 hover:underline"
-          >
+          <Link href="/auth/login" className="text-blue-600 hover:underline">
             Go to login
           </Link>
         </div>
@@ -31,6 +30,9 @@ export default async function Dashboard() {
     .eq("id", user.id)
     .single();
 
+  const userHandle = profile?.handle || "no-handle-set";
+  const publicProfileUrl = `/u/${userHandle}`;
+
   return (
     <main className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
@@ -38,7 +40,7 @@ export default async function Dashboard() {
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-600">
-              @{profile?.handle} • {user.email}
+              {profile?.handle ? `@${profile.handle}` : "No handle set"} • {user.email}
             </p>
           </div>
           <form action="/auth/logout" method="POST">
@@ -69,14 +71,18 @@ export default async function Dashboard() {
         <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
           <p className="text-gray-700">
             <strong>Your public profile:</strong>{" "}
-            <a
-              href={`/u/${profile?.handle}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              {process.env.NEXT_PUBLIC_APP_URL}/u/{profile?.handle}
-            </a>
+            {profile?.handle ? (
+              <a
+                href={publicProfileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                {process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/u/{profile.handle}
+              </a>
+            ) : (
+              <span className="text-red-500 italic">Please set up your profile handle in the database to see your public page.</span>
+            )}
           </p>
         </div>
       </div>

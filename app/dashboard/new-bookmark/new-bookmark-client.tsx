@@ -20,26 +20,26 @@ export default function NewBookmarkClient() {
     setLoading(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const { error: insertError } = await supabase
-        .from("bookmarks")
-        .insert([
-          {
-            title,
-            url,
-            is_public: isPublic,
-            user_id: user.id,
-          },
-        ]);
+      const { error: insertError } = await supabase.from("bookmarks").insert([
+        {
+          title,
+          url,
+          is_public: isPublic,
+          user_id: user.id,
+        },
+      ]);
 
       if (insertError) throw insertError;
 
       router.push("/dashboard");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to create bookmark"
+        err instanceof Error ? err.message : "Failed to create bookmark",
       );
     } finally {
       setLoading(false);

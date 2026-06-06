@@ -37,7 +37,7 @@ function LoginContent() {
       router.push("/dashboard");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "An error occurred during login"
+        err instanceof Error ? err.message : "An error occurred during login",
       );
     } finally {
       setLoading(false);

@@ -16,7 +16,9 @@ type Bookmark = {
   is_public: boolean;
 };
 
-export default function EditBookmarkClient({ bookmarkId }: EditBookmarkClientProps) {
+export default function EditBookmarkClient({
+  bookmarkId,
+}: EditBookmarkClientProps) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [isPublic, setIsPublic] = useState(true);
@@ -29,7 +31,9 @@ export default function EditBookmarkClient({ bookmarkId }: EditBookmarkClientPro
   useEffect(() => {
     async function fetchBookmark() {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) {
           setError("Not authenticated");
           return;
@@ -51,7 +55,9 @@ export default function EditBookmarkClient({ bookmarkId }: EditBookmarkClientPro
           setError("Bookmark not found");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load bookmark");
+        setError(
+          err instanceof Error ? err.message : "Failed to load bookmark",
+        );
       } finally {
         setFetching(false);
       }
@@ -66,7 +72,9 @@ export default function EditBookmarkClient({ bookmarkId }: EditBookmarkClientPro
     setLoading(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
       const { error: updateError } = await supabase
@@ -84,7 +92,7 @@ export default function EditBookmarkClient({ bookmarkId }: EditBookmarkClientPro
       router.push("/dashboard");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to update bookmark"
+        err instanceof Error ? err.message : "Failed to update bookmark",
       );
     } finally {
       setLoading(false);
